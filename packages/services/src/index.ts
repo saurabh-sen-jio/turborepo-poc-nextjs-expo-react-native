@@ -6,7 +6,7 @@ export const getWeatherData = async (url: string, key: string) => {
     });
     return res;
 }
-
+// changed
 export const isValidPincode = (pincode: string) => {
     // Pincode should be exactly 6 digits
     if (!/^\d{6}$/.test(pincode)) {
@@ -14,3 +14,4 @@ export const isValidPincode = (pincode: string) => {
     }
     return true;
 }
+
