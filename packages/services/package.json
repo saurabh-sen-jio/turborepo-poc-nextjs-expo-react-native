@@ -1,0 +1,12 @@
+{
+    "name": "@repo/services",
+    "dependencies": {
+      "typescript": "latest"
+    },
+    "exports": {
+      ".": "./src/index.ts"
+    },
+    "devDependencies": {
+      "@repo/typescript-config": "*"
+    }
+  }
