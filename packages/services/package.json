@@ -1,0 +1,9 @@
+{
+  "name": "@repo/services",
+  "exports": {
+    ".": "./src/code.jsx"
+  },
+  "dependencies": {
+    "typescript": "latest"
+  }
+}
