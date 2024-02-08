@@ -10,6 +10,7 @@ import Weather from './components/Weather/Weather.tsx';
 import Todo from './components/Todo/Todo.tsx';
 import { store } from '@repo/store'
 import { Provider } from 'react-redux'
+import Home from './components/Home/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -17,16 +18,22 @@ const router = createBrowserRouter([
     element: (
       <App />
     ),
-  },
-  {
-    path: "weather",
-    element: <Weather />,
-  },
-  {
-    path: "todo",
-    element: <Provider store={store}>
-      <Todo />,
-    </Provider> 
+    children: [
+      {
+        path: '/',
+        element : <Home />
+      },
+      {
+        path: "weather",
+        element: <Weather />,
+      },
+      {
+        path: "todo",
+        element: <Provider store={store}>
+          <Todo />,
+        </Provider>
+      },
+    ]
   },
 ]);
 
