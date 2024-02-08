@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import Weather from './components/Weather/Weather.tsx';
 import Todo from './components/Todo/Todo.tsx';
+import { store } from '@repo/store'
+import { Provider } from 'react-redux'
 
 const router = createBrowserRouter([
   {
@@ -22,7 +24,9 @@ const router = createBrowserRouter([
   },
   {
     path: "todo",
-    element: <Todo />,
+    element: <Provider store={store}>
+      <Todo />,
+    </Provider> 
   },
 ]);
 

@@ -1,4 +1,6 @@
+import { RootState, increment } from "@repo/store";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 const todos = [
     {
@@ -31,11 +33,21 @@ interface ITodoItemState {
 
 const Todo = () => {
 
+    const { value } = useSelector((state: RootState) => state.todos)
+
     const [todoData, setTodoData] = useState<ITodoItemState[]>(todos);
+
+    const dispatch = useDispatch();
+
+    const handleIncrement =() => {
+        dispatch(increment())
+    }
 
     return (
         <section>
             <h1>todo app</h1>
+            <p>value : {value}</p>
+            <button onClick={handleIncrement}>increment</button>
             {
                 todoData.map((item, i) => <TodoItem key={i} {...item} todos={todoData} setTodoData={setTodoData} />)
             }
