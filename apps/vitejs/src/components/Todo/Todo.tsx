@@ -1,16 +1,14 @@
-import { RootState, setTodoData } from "@repo/store";
-import { useSelector, useDispatch } from "react-redux";
+import { useTodos } from "@repo/store";
 
 const Todo = () => {
 
-    const { todoData } = useSelector((state: RootState) => state.todos);
-    console.log(todoData)
+    const { todoData, dispatchSetTodo } = useTodos();
 
     return (
         <section>
             <h1>todo app</h1>
             {
-                todoData.map((item, i) => <TodoItem key={i} {...item} />)
+                todoData.map((item, i) => <TodoItem key={i} {...item} dispatchSetTodo={dispatchSetTodo} />)
             }
         </section>
     )
@@ -20,14 +18,13 @@ interface ITodoItemState {
     id: number;
     title: string;
     status: boolean;
+    dispatchSetTodo: (id: number) => void;
 }
 
-const TodoItem = ({ title, status, id }: ITodoItemState) => {
-
-    const dispatch = useDispatch();
+const TodoItem = ({ title, status, id, dispatchSetTodo }: ITodoItemState) => {
 
     const handleToggle = () => {
-        dispatch(setTodoData(id))
+        dispatchSetTodo(id);
     }
 
     return (
