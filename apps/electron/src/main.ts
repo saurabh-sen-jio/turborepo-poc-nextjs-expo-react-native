@@ -6,7 +6,7 @@ import { waitForServerUp } from "wait-for-server-up";
 // TODO: maybe better "production detection"
 const isProduction = false;
 const UI_PATH = path.join(__dirname, "../dist-ui/");
-const localServer = 'http://localhost:3000/';
+const localServer = 'http://127.0.0.1:3000/';
 
 async function createWindow() {
   // Create the browser window.
@@ -23,7 +23,7 @@ async function createWindow() {
     mainWindow.loadFile(path.join(UI_PATH, "index.html"));
   } else {
     // show loading spinner while local server is ready
-    mainWindow.loadFile(path.join(__dirname, "loading.html"));
+    mainWindow.loadFile(path.join(__dirname, "../loading.html"));
     await waitForServerUp(localServer)
     // load locally served React app in dev mode
     mainWindow.loadURL(localServer);
