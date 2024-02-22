@@ -12,6 +12,24 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "start": {
+      "dependsOn": ["^start"]
+    },
+    "desktop#start": {
+      "dependsOn": ["desktop#build"],
+      "cache": false
+    },
+    "desktop#bundle": {
+      "dependsOn": []
+    },
+    "packager#package": {
+      "dependsOn": ["ui#build", "desktop#bundle"],
+      "cache": false
+    },
+    "packager#package-dir": {
+      "dependsOn": ["ui#build", "desktop#bundle"],
+      "cache": false
     }
   }
 }

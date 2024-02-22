@@ -3,6 +3,9 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "package": "turbo run package",
+    "package-dir": "turbo run package-dir",
+    "start": "cross-env NODE_ENV=dev turbo run start",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -10,6 +13,7 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "cross-env": "^7.0.3",
     "prettier": "^3.1.1",
     "turbo": "latest"
   },
@@ -19,7 +23,9 @@
   "packageManager": "yarn@1.22.21",
   "workspaces": {
     "packages": [
-      "apps/*",
+      "apps/packager",
+      "apps/ui",
+      "apps/electron",
       "packages/*"
     ],
     "nohoist": [
