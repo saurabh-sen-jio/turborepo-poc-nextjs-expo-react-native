@@ -32,5 +32,8 @@
       "**react-native",
       "**react-native/**"
     ]
+  },
+  "dependencies": {
+    "electron": "^29.0.1"
   }
 }

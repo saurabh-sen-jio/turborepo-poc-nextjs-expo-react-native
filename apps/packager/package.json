@@ -1,17 +1,17 @@
 {
   "name": "packager",
   "version": "0.0.0",
-  "main": "./dist/main.js",
+  "main": "./dist-electron/main.js",
   "scripts": {
-    "copy-electron": "rm -fr dist/ && cp -R ../desktop/dist/ dist",
-    "copy-ui": "rm -fr dist-ui/ && cp -R ../ui/build/ dist-ui",
+    "copy-electron": "rm -fr dist-electron/ && cp -R ../electron/dist-electron/ dist-electron",
+    "copy-ui": "rm -fr dist-ui/ && cp -R ../vitejs/dist/ dist-ui",
     "prepackage": "yarn run copy-electron && yarn run copy-ui",
     "package": "electron-builder --config ./electron-builder-config.yaml",
 
     "prepackage-dir": "yarn run prepackage",
     "package-dir": "electron-builder --config ./electron-builder-config.yaml --dir --config.asar=false",
 
-    "clean": "rm -fr dist dist-ui pkg"
+    "clean": "rm -fr dist-electron dist-ui pkg"
   },
   "devDependencies": {
     "electron-builder": "^23.0.3"
