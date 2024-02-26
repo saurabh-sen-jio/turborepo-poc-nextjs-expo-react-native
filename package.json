@@ -26,6 +26,7 @@
       "apps/packager",
       "apps/ui",
       "apps/electron",
+      "apps/vitejs",
       "packages/*"
     ],
     "nohoist": [
