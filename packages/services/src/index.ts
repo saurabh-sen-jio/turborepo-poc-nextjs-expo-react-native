@@ -1,11 +1,10 @@
-
+// simulating business logic with below utility functions
 const getData = async (url: string, key: string) => {
     let res = await fetch(url, {
         headers: {
             'X-Api-Key': key,
         }
     });
-
     return res;
 }
 
@@ -14,7 +13,6 @@ const isValidPincode = (pincode: string) => {
     if (!/^\d{6}$/.test(pincode)) {
         return false;
     }
-
     return true;
 }
 

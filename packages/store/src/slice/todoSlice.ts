@@ -43,6 +43,7 @@ export const todoSlice = createSlice({
     initialState,
     reducers: {
         setTodoData: (state, action: PayloadAction<number>) => {
+            // mapping through the array and altering the status, if id is matched
             state.todoData = state.todoData.map((item) =>
                 item.id === action.payload ? {
                     ...item,

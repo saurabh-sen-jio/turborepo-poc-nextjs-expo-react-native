@@ -7,6 +7,7 @@ interface IUseTodos {
     dispatchSetTodo: (id: number) => void;
 }
 
+// Custom hook for managing todo data using Redux
 const useTodos = () : IUseTodos => {
     const { todoData } = useSelector((state: RootState) => state.todos);
     const dispatch = useDispatch();

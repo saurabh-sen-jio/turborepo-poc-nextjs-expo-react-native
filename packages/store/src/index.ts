@@ -1,9 +1,9 @@
 // imports for dispatch actions
 import { setTodoData } from './slice/todoSlice'
 import useTodos from './customHooks/useTodos'
+import todoReducer from "./slice/todoSlice"
 
 import { configureStore } from '@reduxjs/toolkit'
-import todoReducer from "./slice/todoSlice"
 
 export const store = configureStore({
   reducer: {
