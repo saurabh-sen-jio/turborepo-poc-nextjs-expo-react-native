@@ -1,13 +1,5 @@
-import React, {PropsWithChildren, useState} from 'react';
-import {
-  Button,
-  FlatList,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import React, {PropsWithChildren} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import {setTodoData} from '@repo/store';
 
@@ -17,49 +9,35 @@ type TodoExampleProps = PropsWithChildren<{
 }>;
 
 function TodoExample({todos, setTodos}: TodoExampleProps): JSX.Element {
-  const [listItemNumber, setListItemNumber] = useState('');
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Native</Text>
-      <TextInput
-        inputMode={'numeric'}
-        value={listItemNumber}
-        onChangeText={setListItemNumber}
-        style={styles.textEditStyles}
-        textAlign={'center'}
-        underlineColorAndroid={'grey'}
-        placeholder={'Enter Pin Code'}
-      />
-      <Button
-        onPress={() => {
-          setTodos(Number.parseInt(listItemNumber, 10));
-        }}
-        title="Submit"
-      />
       <View style={styles.spacerStyle} />
       <FlatList
         data={todos}
         renderItem={({item}) => (
           <View style={styles.listContainerStyle}>
             <Text>{item.title}</Text>
-            <View
+            <TouchableOpacity
               style={[
                 styles.statusIndicatorStyle,
                 {
                   backgroundColor: item.status ? 'green' : 'red',
                 },
               ]}
+              onPress={() => {
+                setTodos(item.id);
+              }}
             />
           </View>
         )}
       />
-      <StatusBar />
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: 24,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -68,10 +46,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     fontSize: 36,
-  },
-  textEditStyles: {
-    margin: 16,
-    paddingHorizontal: 16,
   },
   listContainerStyle: {
     flexDirection: 'row',
@@ -84,6 +58,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     margin: 6,
+    marginLeft: 16,
     borderRadius: 100,
   },
 });
