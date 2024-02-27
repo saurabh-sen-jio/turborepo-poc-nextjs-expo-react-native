@@ -1,11 +1,37 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
+import * as http from "http";
 
-import { waitForServerUp } from "wait-for-server-up";
+// Function to check if the host is up
+// Returns a Promise that resolves to a boolean indicating whether the host is up
+function isHostUp(url: string): Promise<boolean> {
+  return new Promise(resolve => {
+    // Send a GET request to the specified URL
+    http.get(url, () => resolve(true))
+      // Handle errors during the request
+      .on("error", () => resolve(false));
+  });
+}
+
+// artificial wait
+const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Async function to wait for the server to be up
+export async function waitForServerUp(url: string) {
+  console.log("Local server: Waiting");
+  // Wait for the host to be up by awaiting the result of 'isHostUp'
+  let isUp = await isHostUp(url);
+  while(true){
+    if(isUp)break;
+    isUp = await isHostUp(url);
+    wait(1000)
+  }
+  console.log("Local server: Up");
+}
 
 // TODO: maybe better "production detection"
-const isProduction = false;
-const UI_PATH = path.join(__dirname, "../dist-ui/");
+const isProduction = process.env.NODE_ENV !== "dev";
+const UI_PATH = path.join(__dirname, "");
 const localServer = 'http://localhost:5173/';
 
 async function createWindow() {
@@ -20,7 +46,7 @@ async function createWindow() {
 
   if (isProduction) {
     // load bundled React app
-    mainWindow.loadFile(path.join(UI_PATH, "index.html"));
+    mainWindow.loadFile(path.join(UI_PATH, "../index.html"));
   } else {
     // show loading spinner while local server is ready
     mainWindow.loadFile(path.join(__dirname, "../loading.html"));
