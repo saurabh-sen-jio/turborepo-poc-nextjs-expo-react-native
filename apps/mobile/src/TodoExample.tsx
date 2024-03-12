@@ -1,71 +1,75 @@
-import React, {PropsWithChildren} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {PropsWithChildren, useState} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
-import {setTodoData} from '@repo/store';
+import {setTodoData, useWebSocket} from '@repo/store';
+import {Message} from '@repo/store';
+import {styles} from './tabs/styles/styles.ts';
+import TodoTab from './tabs/TodoTab.tsx';
+import WeatherAPITab from './tabs/WeatherAPITab.tsx';
+import ChatsTab from './tabs/ChatsTab.tsx';
 
 type TodoExampleProps = PropsWithChildren<{
   todos: any;
   setTodos: any;
+  chatMessageList: Message[];
 }>;
 
-function TodoExample({todos, setTodos}: TodoExampleProps): JSX.Element {
+function TodoExample({
+  todos,
+  setTodos,
+  chatMessageList,
+}: TodoExampleProps): JSX.Element {
+  const [tabs, changeTab] = useState<string>('todo');
+
+  const {error, sendMessage} = useWebSocket(
+    'wss://socketsbay.com/wss/v2/1/demo/',
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Native</Text>
+      <View style={styles.navBarStyles}>
+        <TouchableOpacity
+          onPress={() => changeTab('todo')}
+          style={[
+            styles.tabStyles,
+            {backgroundColor: tabs === 'todo' ? 'black' : 'grey'},
+          ]}>
+          <Text style={styles.tabHeaderStyle}>Todo demo tab</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => changeTab('weather')}
+          style={[
+            styles.tabStyles,
+            {backgroundColor: tabs === 'weather' ? 'black' : 'grey'},
+          ]}>
+          <Text style={styles.tabHeaderStyle}>Weather API demo tab</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => changeTab('chats')}
+          style={[
+            styles.tabStyles,
+            {backgroundColor: tabs === 'chats' ? 'black' : 'grey'},
+          ]}>
+          <Text style={styles.tabHeaderStyle}>Chats</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.spacerStyle} />
-      <FlatList
-        data={todos}
-        renderItem={({item}) => (
-          <View style={styles.listContainerStyle}>
-            <Text>{item.title}</Text>
-            <TouchableOpacity
-              style={[
-                styles.statusIndicatorStyle,
-                {
-                  backgroundColor: item.status ? 'green' : 'red',
-                },
-              ]}
-              onPress={() => {
-                setTodos(item.id);
-              }}
-            />
-          </View>
-        )}
-      />
+      {tabs === 'todo' ? (
+        <TodoTab todos={todos} setTodos={setTodos} />
+      ) : tabs === 'weather' ? (
+        <WeatherAPITab />
+      ) : (
+        <ChatsTab chatMessageList={chatMessageList} sendMessage={sendMessage} />
+      )}
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 24,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  header: {
-    fontWeight: 'bold',
-    marginBottom: 20,
-    fontSize: 36,
-  },
-  listContainerStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  spacerStyle: {
-    height: 10,
-  },
-  statusIndicatorStyle: {
-    width: 20,
-    height: 20,
-    margin: 6,
-    marginLeft: 16,
-    borderRadius: 100,
-  },
-});
 
 const mapStateToProps = (state: any) => {
   return {
     todos: state.todos.todoData,
+    chatMessageList: state.chats.messageList,
   };
 };
 

@@ -1,13 +1,17 @@
 // imports for dispatch actions
 import { setTodoData } from './slice/todoSlice'
 import useTodos from './customHooks/useTodos'
-import todoReducer from "./slice/todoSlice"
 
 import { configureStore } from '@reduxjs/toolkit'
+import todoReducer from "./slice/todoSlice"
+import useWebSocket from "./customHooks/useWebSocket";
+import chatReducer,{Message} from "./slice/chatSlice";
+import {localUserId} from "./constants";
 
 export const store = configureStore({
   reducer: {
-    todos: todoReducer
+    todos: todoReducer,
+    chats: chatReducer,
   },
 })
 
@@ -17,4 +21,4 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
 // utils function and custom hooks
-export {setTodoData, useTodos};
+export {setTodoData, useTodos, useWebSocket, localUserId};    export type { Message };

@@ -38,7 +38,7 @@ const initialState: ITodoSlice = {
     todoData: todos
 }
 
-export const todoSlice = createSlice({
+export const todoSlice   = createSlice({
     name: 'todos',
     initialState,
     reducers: {
