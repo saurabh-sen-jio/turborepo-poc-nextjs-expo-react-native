@@ -6,10 +6,10 @@ function App() {
   
 
   return (
-    <>
+    <div className='app' style={{minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
       <Navbar />
       <Outlet />
-    </>
+    </div>
   )
 }
 
